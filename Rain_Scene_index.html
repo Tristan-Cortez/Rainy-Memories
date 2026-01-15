@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rainy Memories</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            background-color: #000; 
+            color: white;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: 'Playfair Display', serif;
+        }
+
+        #intro-overlay {
+            position: fixed;
+            top: 0; left: 0; 
+            width: 100vw; height: 100vh;
+            background: black;
+            z-index: 999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            pointer-events: all;
+        }
+
+        #prompt-text {
+            color: white;
+            font-size: 28px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            font-style: italic;
+            animation: breathe 3s infinite ease-in-out;
+        }
+
+        @keyframes breathe {
+            0%, 100% { opacity: 0.3; } 50% { opacity: 1; }
+        }
+
+        @keyframes doubleBlink {
+            0% { clip-path: ellipse(150% 150% at 50% 50%); }
+            20% { clip-path: ellipse(150% 0% at 50% 50%); }
+            40% { clip-path: ellipse(150% 150% at 50% 50%); }
+            60% { clip-path: ellipse(150% 0% at 50% 50%); }
+            100% { clip-path: ellipse(150% 150% at 50% 50%); opacity: 0; }
+        }
+
+        .active-blink {
+            animation: doubleBlink 2.5s forwards;
+            pointer-events: none;
+        }
+
+        #bg-video {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            filter: brightness(0.4);
+        }
+
+        #poem-container {
+            text-align: center;
+            font-family: 'Dancing Script', cursive;
+            font-size: 34px;
+            font-style: italic;
+            line-height: 1.6;
+            z-index: 10;
+            max-width: 80%;
+        }
+
+        #poem-container a { color: white; text-decoration: none; }
+        #poem-container a:hover { text-decoration: underline; }
+
+        .stanza {
+            opacity: 0;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 15px black;
+            transition: opacity 3s ease-in-out;
+        }
+
+        .show-stanza { opacity: 1; }
+    </style>
+</head>
+<body>
+
+    <div id="intro-overlay" onclick="start()">
+        <div id="prompt-text">Open your eyes</div>
+    </div>
+
+    <video id="bg-video" loop muted playsinline>
+        <source src="tokyo_rain.mp4" type="video/mp4">
+    </video>
+
+    <audio id="rain-audio" loop preload="auto">
+        <source src="https://www.soundjay.com/nature/sounds/rain-07.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="poem-container">
+        <div class="stanza" id="s1">
+            I remember <a href="https://www.accuweather.com/en/ph/taytay/265786/weather-forecast/265786" target="_blank">walking through the calming rain</a><br>
+            Each drop washing away my stress and pain
+        </div>
+        <div class="stanza" id="s2">
+            I remember <a href="https://www.roblox.com" target="_blank">playing horror games</a> with my friends<br>
+            Laughing so hard through the screams and jumpscares
+        </div>
+        <div class="stanza" id="s3">
+            I remember <a href="https://open.spotify.com" target="_blank">chilling in my room with music loud</a><br>
+            Feeling every beat, lost in sound
+        </div>
+        <div class="stanza" id="s4">
+            I remember these moments throughout my life<br>
+            Simple and true, that pull me through my life.
+        </div>
+    </div>
+
+    <script>
+        function start() {
+            const overlay = document.getElementById('intro-overlay');
+            const video = document.getElementById('bg-video');
+            const audio = document.getElementById('rain-audio');
+            const prompt = document.getElementById('prompt-text');
+
+            prompt.style.visibility = 'hidden';
+            overlay.classList.add('active-blink');
+
+            video.play();
+            audio.play();
+
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                setTimeout(() => document.getElementById('s1').classList.add('show-stanza'), 500);
+                setTimeout(() => document.getElementById('s2').classList.add('show-stanza'), 3500);
+                setTimeout(() => document.getElementById('s3').classList.add('show-stanza'), 6500);
+                setTimeout(() => document.getElementById('s4').classList.add('show-stanza'), 9500);
+            }, 2500); 
+        }
+    </script>
+</body>
+</html>
